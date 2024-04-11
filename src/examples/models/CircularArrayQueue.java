@@ -11,7 +11,7 @@ public class CircularArrayQueue<E> implements Queue<E> {
     private int tail = 0;
 
     public CircularArrayQueue(int size) {
-        elements = (E[])new Object[size];
+        elements = (E[]) new Object[size];
     }
 
     @Override
@@ -64,7 +64,7 @@ public class CircularArrayQueue<E> implements Queue<E> {
     }
 
     private void increaseCapacity() {
-        E[] newElementsArray = (E[])new Object[elements.length * 2];
+        E[] newElementsArray = (E[]) new Object[elements.length * 2];
         for (int index = 0; index < elements.length; index++) {
             newElementsArray[index] = elements[(head + index) % elements.length];
         }
