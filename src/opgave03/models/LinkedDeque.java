@@ -1,7 +1,5 @@
 package opgave03.models;
 
-import opgave02.DoubleLinkedQueue;
-
 import java.util.NoSuchElementException;
 
 public class LinkedDeque<E> implements Deque<E> {
@@ -77,7 +75,7 @@ public class LinkedDeque<E> implements Deque<E> {
 
     private void throwIfEmpty() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
+            throw new NoSuchElementException("Deque is empty");
         }
     }
 
@@ -85,11 +83,6 @@ public class LinkedDeque<E> implements Deque<E> {
         E element;
         Node<E> next;
         Node<E> prev;
-
-        public Node(E element, Node<E> next) {
-            this.next = next;
-            this.element = element;
-        }
 
         public Node(E element, Node<E> prev, Node<E> next) {
             this.prev = prev;
