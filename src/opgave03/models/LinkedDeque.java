@@ -4,16 +4,17 @@ import opgave02.DoubleLinkedQueue;
 
 import java.util.NoSuchElementException;
 
-public class DoubleLinkedDeque<E> implements Deque<E> {
+public class LinkedDeque<E> implements Deque<E> {
 
     private Node<E> head;
     private Node<E> tail;
     private int size = 0;
 
-    public DoubleLinkedDeque() {
+    public LinkedDeque() {
         head = new Node<>(null);
-        tail = new Node<>(null, head);
+        tail = new Node<>(null);
         head.next = tail;
+        tail.prev = head;
     }
 
     @Override
@@ -23,32 +24,50 @@ public class DoubleLinkedDeque<E> implements Deque<E> {
 
     @Override
     public void addFirst(E newElement) {
-
+        Node<E> newNode = new Node<>(newElement, head, head.next);
+        head.next.prev = newNode;
+        head.next = newNode;
+        size++;
     }
 
     @Override
     public void addLast(E newElement) {
-
+        Node<E> newNode = new Node<>(newElement, tail.prev, tail);
+        tail.prev.next = newNode;
+        tail.prev = newNode;
+        size++;
     }
 
     @Override
     public E removeFirst() {
-        return null;
+        throwIfEmpty();
+        E element = head.next.element;
+        head.next.next.prev = head;
+        head.next = head.next.next;
+        size--;
+        return element;
     }
 
     @Override
     public E removeLast() {
-        return null;
+        throwIfEmpty();
+        E element = tail.prev.element;
+        tail.prev.prev.next = tail;
+        tail.prev = tail.prev.prev;
+        size--;
+        return element;
     }
 
     @Override
     public E getFirst() {
-        return null;
+        throwIfEmpty();
+        return head.next.element;
     }
 
     @Override
     public E getLast() {
-        return null;
+        throwIfEmpty();
+        return tail.prev.element;
     }
 
     @Override
@@ -72,7 +91,8 @@ public class DoubleLinkedDeque<E> implements Deque<E> {
             this.element = element;
         }
 
-        public Node(E element, Node<E> next, Node<E> prev) {
+        public Node(E element, Node<E> prev, Node<E> next) {
+            this.prev = prev;
             this.next = next;
             this.element = element;
         }

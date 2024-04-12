@@ -12,15 +12,16 @@ public class DoubleLinkedQueue<E> implements Queue<E> {
 
     public DoubleLinkedQueue() {
         head = new Node<>(null);
-        tail = new Node<>(null, head);
+        tail = new Node<>(null);
         head.next = tail;
+        tail.prev = head;
     }
 
     @Override
     public void add(E e) {
-        Node<E> newNode = new Node<>(e, tail);
-        tail.next.next = newNode;
-        tail.next = newNode;
+        Node<E> newNode = new Node<>(e, tail.prev, tail);
+        tail.prev.next = newNode;
+        tail.prev = newNode;
         size++;
     }
 
@@ -28,6 +29,7 @@ public class DoubleLinkedQueue<E> implements Queue<E> {
     public E remove() {
         throwIfEmpty();
         E element = head.next.element;
+        head.next.next.prev = head;
         head.next = head.next.next;
         size--;
         return element;
@@ -47,8 +49,9 @@ public class DoubleLinkedQueue<E> implements Queue<E> {
     @Override
     public void clear() {
         head = new Node<>(null);
-        tail = new Node<>(null, head);
+        tail = new Node<>(null);
         head.next = tail;
+        tail.prev = head;
         size = 0;
     }
 
@@ -73,8 +76,9 @@ public class DoubleLinkedQueue<E> implements Queue<E> {
             this.element = element;
         }
 
-        public Node(E element, Node<E> next, Node<E> prev) {
+        public Node(E element, Node<E> prev, Node<E> next) {
             this.next = next;
+            this.prev = prev;
             this.element = element;
         }
 
